@@ -1,0 +1,27 @@
+name: Unit Tests
+
+on: [push, pull_request]  # Runs on push and PRs
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.9"
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest pytest-cov  # Optional: For coverage reports
+    
+    - name: Run unit tests
+      run: |
+        pytest tests/ -v  # Runs all tests in your tests folder
+        # pytest --cov=. --cov-report=xml  # Uncomment for coverage reports
